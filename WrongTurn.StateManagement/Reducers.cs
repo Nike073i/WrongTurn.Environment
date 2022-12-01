@@ -10,7 +10,7 @@ namespace WrongTurn.StateManagement
         {
             var sumOfChanges = action.SumChanges;
             var newBalance = state.Balance + sumOfChanges;
-            if (newBalance < 0) throw new NotEnoughMoneyException();
+            if (newBalance < 0) throw new NotEnoughMoneyException("На балансе недостаточно средств");
             return new PlayerState(newBalance, state.Achievements);
         }
 

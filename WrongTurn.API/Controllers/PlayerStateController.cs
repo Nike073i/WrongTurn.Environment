@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WrongTurn.API.RequestModels;
 using WrongTurn.API.Services;
-using WrongTurn.StateManagement;
-using WrongTurn.StateManagement.Actions.Base;
 
 namespace WrongTurn.API.Controllers
 {
@@ -25,16 +24,16 @@ namespace WrongTurn.API.Controllers
 
         [HttpPost("save")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> SaveState(PlayerState playerState, IEnumerable<IPlayerAction> actions)
+        public async Task<IActionResult> SaveState([FromBody] SaveStateModel model)
         {
-            return Ok(await _playerStateService.ApplyChanges(playerState, actions));
+            return Ok(await _playerStateService.ApplyChanges(model.PlayerId, model.PlayerState, model.Actions));
         }
 
         [HttpPut("unlock")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> UnlockAchievement(Guid playerId, string achievementId)
+        public async Task<IActionResult> UnlockAchievement([FromBody] UnlockAchievementModel model)
         {
-            await _playerStateService.MarkAchievementAsUnlocked(playerId, achievementId);
+            await _playerStateService.MarkAchievementAsUnlocked(model.PlayerId, model.AchievementId);
             return Ok();
         }
     }

@@ -27,7 +27,7 @@ namespace WrongTurn.API
         {
             if (env.IsDevelopment())
             {
-                context.Database.EnsureCreated();
+                context.InsertDefaultValues().Wait();
                 app.UseDeveloperExceptionPage();
             }
 
