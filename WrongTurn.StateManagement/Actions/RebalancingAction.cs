@@ -2,7 +2,7 @@
 
 namespace WrongTurn.StateManagement.Actions.Balance
 {
-    public class RebalancingAction : IPlayerAction
+    public class RebalancingAction : PlayerAction
     {
         public decimal SumChanges { get; }
         public RebalancingAction(decimal sumChanges)
@@ -10,7 +10,7 @@ namespace WrongTurn.StateManagement.Actions.Balance
             SumChanges = sumChanges;
         }
 
-        public PlayerState Handle(PlayerState currentState)
+        public override PlayerState Handle(PlayerState currentState)
         {
             return Reducers.BalanceReducer(currentState, this);
         }

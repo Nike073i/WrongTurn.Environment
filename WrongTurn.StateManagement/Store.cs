@@ -13,7 +13,7 @@ namespace WrongTurn.StateManagement
             PlayerState = playerState;
         }
 
-        public void Dispatch(IPlayerAction action)
+        public void Dispatch(PlayerAction action)
         {
             OnStateChanged(action.Handle(PlayerState));
         }

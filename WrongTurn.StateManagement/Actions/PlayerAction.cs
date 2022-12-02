@@ -1,7 +1,7 @@
 ﻿namespace WrongTurn.StateManagement.Actions.Base
 {
-    public interface IPlayerAction
+    public class PlayerAction
     {
-        PlayerState Handle(PlayerState currentState);
+        public virtual PlayerState Handle(PlayerState currentState) { return currentState; }
     }
 }

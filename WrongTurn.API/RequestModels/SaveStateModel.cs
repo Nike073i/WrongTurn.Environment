@@ -13,6 +13,6 @@ namespace WrongTurn.API.RequestModels
         public PlayerState PlayerState { get; set; }
 
         [Required]
-        public IEnumerable<IPlayerAction> Actions { get; set; }
+        public IEnumerable<PlayerAction> Actions { get; set; }
     }
 }

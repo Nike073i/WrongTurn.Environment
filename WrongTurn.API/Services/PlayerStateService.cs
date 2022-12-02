@@ -15,7 +15,7 @@ namespace WrongTurn.API.Services
             _playerRepository = playerRepository;
         }
 
-        public async Task<PlayerState?> ApplyChanges(Guid playerId, PlayerState requestState, IEnumerable<IPlayerAction> actions)
+        public async Task<PlayerState?> ApplyChanges(Guid playerId, PlayerState requestState, IEnumerable<PlayerAction> actions)
         {
             var player = await _playerRepository.GetByIdAsync(playerId);
             if (player == null) throw new PlayerNotFoundException("Игрок с указанным Id не найден");
@@ -27,7 +27,7 @@ namespace WrongTurn.API.Services
             return correctState.Equals(requestState) ? null : correctState;
         }
 
-        private PlayerState RepeatActions(PlayerState currentState, IEnumerable<IPlayerAction> actions)
+        private PlayerState RepeatActions(PlayerState currentState, IEnumerable<PlayerAction> actions)
         {
             var store = new Store(currentState);
             foreach (var action in actions)
@@ -48,6 +48,13 @@ namespace WrongTurn.API.Services
             }
             player.Balance = correctBalance;
             await _playerRepository.SaveAsync(player);
+        }
+
+        public async Task<Guid> CreatePlayer()
+        {
+            var newPlayer = new Player();
+            await _playerRepository.SaveAsync(newPlayer);
+            return newPlayer.Id;
         }
 
         public async Task MarkAchievementAsUnlocked(Guid playerId, string achievementId)

@@ -36,6 +36,13 @@ namespace WrongTurn.API.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
+        [HttpPost("create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<Guid> CreatePlayer()
+        {
+            return await _playerStateService.CreatePlayer();
+        }
+
         [HttpPut("unlock")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
