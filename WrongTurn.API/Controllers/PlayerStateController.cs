@@ -17,24 +17,36 @@ namespace WrongTurn.API.Controllers
 
         [HttpGet("{playerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByPlayerId(Guid playerId)
         {
-            return Ok(await _playerStateService.GetPlayerState(playerId));
+            var player = await _playerStateService.GetPlayerState(playerId);
+            return player != null ? Ok(player) : NotFound();
         }
 
         [HttpPost("save")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SaveState([FromBody] SaveStateModel model)
         {
-            return Ok(await _playerStateService.ApplyChanges(model.PlayerId, model.PlayerState, model.Actions));
+            try
+            {
+                return Ok(await _playerStateService.ApplyChanges(model.PlayerId, model.PlayerState, model.Actions));
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         [HttpPut("unlock")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UnlockAchievement([FromBody] UnlockAchievementModel model)
         {
-            await _playerStateService.MarkAchievementAsUnlocked(model.PlayerId, model.AchievementId);
-            return Ok();
+            try
+            {
+                await _playerStateService.MarkAchievementAsUnlocked(model.PlayerId, model.AchievementId);
+                return Ok();
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
     }
 }

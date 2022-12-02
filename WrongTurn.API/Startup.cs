@@ -21,6 +21,8 @@ namespace WrongTurn.API
             services.AddControllers();
             services.AddRepositories();
             services.AddApiServices();
+            services.AddSwaggerGen();
+            services.AddSwaggerGenNewtonsoftSupport();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WrongTurnDbContext context)
@@ -34,6 +36,8 @@ namespace WrongTurn.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseEndpoints(endpoints =>
             {
