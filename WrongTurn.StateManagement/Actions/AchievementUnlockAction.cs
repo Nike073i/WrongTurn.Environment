@@ -2,7 +2,7 @@
 
 namespace WrongTurn.StateManagement.Actions.Achievement
 {
-    public class AchievementUnlockAction : PlayerAction
+    public class AchievementUnlockAction : IPlayerAction
     {
         public string AchievementId { get; }
         public AchievementUnlockAction(string achievementId)
@@ -10,7 +10,7 @@ namespace WrongTurn.StateManagement.Actions.Achievement
             AchievementId = achievementId;
         }
 
-        public override PlayerState Handle(PlayerState currentState)
+        public PlayerState Handle(PlayerState currentState)
         {
             return Reducers.AchievementReducer(currentState, this);
         }
