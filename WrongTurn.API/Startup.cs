@@ -18,7 +18,7 @@ namespace WrongTurn.API
         {
             var dbConnection = Configuration.GetSection("Database").GetConnectionString("MSSQL");
             services.AddDbContext<WrongTurnDbContext>(options => options.UseSqlServer(dbConnection));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddRepositories();
             services.AddApiServices();
             services.AddSwaggerGen();

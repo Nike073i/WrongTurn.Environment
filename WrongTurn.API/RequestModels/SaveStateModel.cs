@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using WrongTurn.API.Converters;
 using WrongTurn.StateManagement;
 using WrongTurn.StateManagement.Actions.Base;
 
@@ -12,6 +14,7 @@ namespace WrongTurn.API.RequestModels
         [Required]
         public PlayerState PlayerState { get; set; }
 
+        [JsonConverter(typeof(PlayerActionConverter))]
         [Required]
         public IEnumerable<IPlayerAction> Actions { get; set; }
     }
